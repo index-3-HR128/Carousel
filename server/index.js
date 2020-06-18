@@ -3,6 +3,7 @@ const path = require('path')
 const axios = require('axios')
 const app = express()
 const port = 3003
+var abc = 3;
 
 //init database
 const db = require('../database/index.js')
@@ -36,6 +37,15 @@ app.get('/api/users', function(req,res){
     .catch((e) =>{
       console.log("error in get request: "+ err)
     })
+})
+
+//post request on places
+app.post('/api/users', function(req,res){
+  console.log('in server POST user loop');
+  let userid = req.body._id;
+  Users.update(
+    { name}
+
 })
 
 
