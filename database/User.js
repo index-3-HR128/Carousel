@@ -3,8 +3,8 @@ const db = require('./index.js');
 mongoose.Promise = global.Promise;
 
 const userSchema = new mongoose.Schema ({
-  username: String,
-  list: [{name: String}],
+  name: String,
+  list: [String],
   likeplace: [{name: String, list: String}]
 })
 

@@ -3,12 +3,19 @@ const path = require('path')
 const axios = require('axios')
 const app = express()
 const port = 3003
-var abc = 3;
 
 //init database
 const db = require('../database/index.js')
-const Places = require('../database/Place.js')
-const Users = require('../database/User.js')
+const Place = require('../database/Place.js')
+const User = require('../database/User.js')
+
+//init parser
+const parser = require('body-parser')
+app.use(parser.json());
+
+//init morgan
+const morgan = require('morgan')
+app.use(morgan('dev'));
 
 // app.get('/', (req, res) => res.send('Hello World!'))
 app.use(express.static(path.join(__dirname,'..','client','dist')))
@@ -16,7 +23,7 @@ app.use(express.static(path.join(__dirname,'..','client','dist')))
 //get request on places
 app.get('/api/places', function(req,res){
   console.log('in server GET Places loop');
-  Places.find()
+  Place.find()
     .then((data) => {
       console.log("sending get Places data to client")
       res.send(data);
@@ -29,9 +36,9 @@ app.get('/api/places', function(req,res){
 //get request on places
 app.get('/api/users', function(req,res){
   console.log('in server GET user loop');
-  Users.find()
+  User.find()
     .then((data) => {
-      console.log("sending get User data to client")
+      console.log(data);
       res.send(data);
     })
     .catch((e) =>{
@@ -39,12 +46,21 @@ app.get('/api/users', function(req,res){
     })
 })
 
-//post request on places
+// post request on places
 app.post('/api/users', function(req,res){
   console.log('in server POST user loop');
   let userid = req.body._id;
-  Users.update(
-    { name}
+  let listName = req.body.list;
+  let newlikeplace = req.body.likeplace;
+  User.findByIdAndUpdate(
+    { name: userid},
+    { $push: {"list": listName}},
+    { $push: {"likeplace": {
+      likeplace: newlikeplace,
+      list: listName
+    }}}
+  );
+
 
 })
 
