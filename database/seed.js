@@ -12,10 +12,10 @@ const sampleUser = () =>{
     for(var i=0;i<90;i++){
       let user = {};
       user.name = faker.name.findName()+ "";
-      user.list = ["VacationList"];
       user.likeplace = [{
         name: "One bedroom Oahu",
-        list: "VacationList"
+        list: "VacationList",
+        like: true
       }];
       users.push(user);
     }

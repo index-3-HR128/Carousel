@@ -4,8 +4,7 @@ mongoose.Promise = global.Promise;
 
 const userSchema = new mongoose.Schema ({
   name: String,
-  list: [String],
-  likeplace: [{name: String, list: String}]
+  likeplace: [{name: String, list: String, like: Boolean}]
 })
 
 const User = mongoose.model('User', userSchema)
