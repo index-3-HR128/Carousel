@@ -1,0 +1,5 @@
+const UNSPLASH_API_KEY = 'oHUIJFUeSAM3M00EfByr26mGiJ-fx6OzhImVB5cqTao';
+const UNSPLACE_SECRET = 'CA8OMD4bzexzBGWawZihqa32OK-GT6Nrbst1oDAjhAU';
+
+
+module.exports = UNSPLASH_API_KEY;
