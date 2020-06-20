@@ -49,21 +49,31 @@ app.get('/api/users', function(req,res){
 app.post('/api/users', function(req,res){
   console.log('in server POST user loop');
   let userid = req.body._id;
-  let listName = req.body.list;
   let newlikeplace = {
     "name": req.body.likeplace,
-    "list": listName
+    "list": req.body.list,
+    "like": req.body.like
   }
   console.log(newlikeplace);
   User.findByIdAndUpdate(
     { _id: userid},
-    // { $push: {"list": listName}},
     { $push: {"likeplace": newlikeplace}}
   )
   .then(() => res.sendStatus(202))
   .catch((e)=> res.sendStatus(404))
+})
 
-
+app.patch('/api/users/:placeId', function(req,res){
+  console.log('in server PATCH user loop');
+  User.update(
+    { "likeplace._id": req.params.placeId},
+    {"$set": { "likeplace.$.like": req.body.like}}
+  )
+  .then(() => res.sendStatus(202))
+  .catch((e)=> {
+    console.log(e);
+    res.sendStatus(404)
+  })
 })
 
 
