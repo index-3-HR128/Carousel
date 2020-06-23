@@ -70,7 +70,7 @@ class App extends React.Component {
       return <div>loading...</div>;
     }else {
       return (
-        <div>
+        <div className="wrapper">
           <TopBar page={this.state.page} totalpage={3}/>
           <Carousel places={this.state.places} />
           <LikeForm
