@@ -46,12 +46,12 @@ const samplePlaces = (pageNumber, previousdata) => {
         tempObj.picture = unsplashPhoto[i].urls.thumb;
         tempObj.type = 'One room';
         tempObj.bed = '1 bed';
-        tempObj.rating = Math.random() * (5-2)+2;
-        tempObj.totalReview = Math.random() * 100;
+        tempObj.rating = parseFloat(Math.random() * (5-2)+2).toFixed(2);
+        tempObj.totalReview = Math.ceil(Math.random() * 100 + 1);
         tempObj.hostplus = Math.round(Math.random() * 1);
         tempObj.superhost = Math.round(Math.random() * 1);
         tempObj.title = 'Nice Room';
-        tempObj.price = Math.random() * (300-100)+100;
+        tempObj.price = parseFloat(Math.random() * (300-100)+100).toFixed(0);
         tempObj.src = "http://youtube.com";
         result.push(tempObj);
       }
