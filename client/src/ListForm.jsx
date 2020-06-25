@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ListForm = ({listButtonRender,createNewList, cancelCreateListButton, submitCreateListbutton}) =>{
+const ListForm = ({listButtonRender,createNewList, cancelCreateListButton, submitCreateListbutton, likeListOnChange}) =>{
   if(listButtonRender === 'form'){
     return(
       <div>
@@ -10,11 +10,12 @@ const ListForm = ({listButtonRender,createNewList, cancelCreateListButton, submi
             <div>
             <input
               name="ListName"
-              placeholder="Ex. Summer Vacation" />
+              placeholder="Ex. Summer Vacation"
+              onChange = {(e)=>likeListOnChange(e)}/>
             </div>
             <div>
-              <input type="cancel" value="Cancel" onClick={()=>cancelCreateListButton()}></input>
-              <input type="submit" value="Create"></input>
+              <input type="button" name="cancel" value="Cancel" onClick={()=>cancelCreateListButton()}></input>
+              <input type="submit" name="submit" value="Create" ></input>
             </div>
           </label>
         </form>

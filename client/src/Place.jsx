@@ -1,6 +1,7 @@
 import React from 'react';
+import styles from './styles.css';
 
-const Place = ({place}) => {
+const Place = ({place, heartClicked}) => {
   const ratingRender = ()=>{
     if(place.rating !== undefined){
       return (
@@ -8,13 +9,18 @@ const Place = ({place}) => {
       )
     }
   }
-
+  const id = place._id;
   return (
-  <div>
-    <img src={place.picture} />
-    <div>{place.type} · {place.bed} {ratingRender()}</div>
-    <div>{place.title}</div>
-    <div><span>${place.price}</span> / night</div>
+  <div className={styles.tile}>
+    <div className={styles.container}>
+      <div>
+        <img src={place.picture} width="230" height="150" />
+        <button className={styles.heartbutton}onClick={()=>heartClicked(place)}>&hearts;</button>
+      </div>
+      <div>{place.type} · {place.bed} {ratingRender()}</div>
+      <div>{place.title}</div>
+      <div><span>${place.price}</span> / night</div>
+    </div>
   </div>
   )
 }
