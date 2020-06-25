@@ -7,6 +7,10 @@ $growFactor = 1.5 // 1.5 times the original size
 $moveLeft = -($tileWidth * ($growFactor - 1) / 2)
 $moveRight = $tileWidth * ($growFactor - 1) */
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: #F7F7F7;
 }
