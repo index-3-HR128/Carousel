@@ -19,6 +19,10 @@ app.use(parser.json());
 const morgan = require('morgan')
 app.use(morgan('dev'));
 
+//init cors
+var cors = require('cors')
+app.use(cors());
+
 
 //Places API Calls:
 app.get('/api/places', PlaceController.get);
