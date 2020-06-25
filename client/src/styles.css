@@ -33,6 +33,11 @@ div.moreplacetostay{
   background: greenyellow;
 }
 
+p.header{
+  font-family: Helvetica, sans-serif;
+  font-size: 1em;
+}
+
 div.topBar{
   float: right;
   display: inline;

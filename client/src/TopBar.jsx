@@ -5,7 +5,7 @@ import styles from './styles.css';
 const TopBar = ({page, totalpage, leftArrowClicked, rightArrowClicked}) => (
   <div className={styles.outline} >
     <div className={styles.moreplacetostay}>
-      <p>More Places to stay</p>
+      <p className={styles.header}><b>More Places to stay</b></p>
     </div>
     <div className={styles.topBar}>
       <button onClick={()=>rightArrowClicked()}>&gt;</button>

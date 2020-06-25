@@ -19,7 +19,7 @@ const Place = ({place, heartClicked}) => {
       </div>
       <div>{place.type} · {place.bed} {ratingRender()}</div>
       <div>{place.title}</div>
-      <div><span>${place.price}</span> / night</div>
+      <div><span><b>${place.price}</b></span> / night</div>
     </div>
   </div>
   )
