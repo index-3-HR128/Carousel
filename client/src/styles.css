@@ -1,0 +1,87 @@
+/* $duration = 450ms
+$tileWidth = 250px
+$tileHeight = ($tileWidth / (16/9))
+$iconSize = 50px
+$growFactor = 1.5 // 1.5 times the original size
+
+$moveLeft = -($tileWidth * ($growFactor - 1) / 2)
+$moveRight = $tileWidth * ($growFactor - 1) */
+
+body {
+  background-color: #F7F7F7;
+}
+
+div.wrapper{
+  outline: 3px solid yellow;
+  margin-left: auto;
+  margin-right: auto;
+  width:100%;
+  height: 100%;
+  max-width: 1120px;
+
+}
+
+
+ div.outline{
+  outline: 3px solid red;
+  width:100%;
+}
+
+div.moreplacetostay{
+  display: inline-block;
+  position: relative;
+  background: greenyellow;
+}
+
+div.topBar{
+  float: right;
+  display: inline;
+  background:yellow;
+  height: 50%;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+div.row {
+  width: 100%;
+}
+
+div.row__inner{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+div.tile{
+  margin-top: 20px;
+}
+
+div.container{
+  position: relative;
+  border: dashed blue 1px;
+  width: 100%;
+  height: auto;
+
+}
+
+button.heartbutton {
+  position: absolute;
+  top: 0%;
+  left: 90%;
+  background-color: #555;
+  color: white;
+  font-size: 15px;
+  padding: 5px 5px;
+  border: none;
+  border-radius: 5px;
+  opacity: 0;
+}
+
+div.container:hover .heartbutton{
+  opacity: 1;
+}
+
+
+button.button{
+  border-radius: 8px;
+}

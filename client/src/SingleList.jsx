@@ -1,12 +1,30 @@
 import React from 'react';
+import styles from './styles.css';
 
-const SingleList = ({singleList}) => (
-  <div>
-    <div>{singleList}</div>
+
+const SingleList = ({singleList, listLikeToggle}) => {
+  let likeRender= () =>{
+    if(singleList.like === true){
+      return (
+        <div>&hearts;</div>
+      )
+    }else{
+      return (
+        <div>X</div>
+      )
+    }
+  }
+
+
+  return(
     <div>
-      <button type="submit">like</button>
+      <div>{singleList.list}</div>
+      <div>
+        <div onClick={(e)=>listLikeToggle(e,singleList)}>{likeRender()}</div>
+      </div>
     </div>
-  </div>
-)
+  )
+}
+
 
 export default SingleList;

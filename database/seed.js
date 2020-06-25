@@ -12,11 +12,7 @@ const sampleUser = () =>{
     for(var i=0;i<90;i++){
       let user = {};
       user.name = faker.name.findName()+ "";
-      user.likeplace = [{
-        name: "One bedroom Oahu",
-        list: "VacationList",
-        like: true
-      }];
+      user.likeplace = [];
       users.push(user);
     }
     if( users != null){

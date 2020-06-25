@@ -3,27 +3,64 @@ import axios from 'axios';
 import Carousel from './Carousel.jsx';
 import TopBar from './TopBar.jsx';
 import LikeForm from './LikeForm.jsx';
+import styles from './styles.css';
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       places: [],
+      totalplaces: [],
       user: {},
       error: null,
       isLoaded: false,
       page: 1,
-      listbuttonRender: 'default'
+      listbuttonRender: 'default',
+      saveToAListRender: 'false',
+      likelistinput: '',
+      clickedplace: {}
     };
     this.createNewList = this.createNewList.bind(this);
     this.cancelCreateListButton = this.cancelCreateListButton.bind(this);
     this.submitCreateListbutton = this.submitCreateListbutton.bind(this);
+    this.leftArrowClicked = this.leftArrowClicked.bind(this);
+    this.rightArrowClicked = this.rightArrowClicked.bind(this);
+    this.heartClicked = this.heartClicked.bind(this);
+    this.exitLikeFormClicked = this.exitLikeFormClicked.bind(this);
+    this.likeListOnChange = this.likeListOnChange.bind(this);
+    this.listLikeToggle = this.listLikeToggle.bind(this);
+
+    this.serverUserPost = "http://localhost:3003/api/users";
+    this.userIndex = 0;
+  }
+
+  //heart clicked
+  heartClicked(place){
+    console.log(place);
+    this.setState({
+      saveToAListRender: 'true',
+      clickedplace: place,
+    })
   }
 
   //List form button interrupt
+  exitLikeFormClicked(){
+    this.setState({
+      saveToAListRender: 'false',
+      clickedplace: {}
+    })
+  }
+
   createNewList(){
     this.setState({
       listbuttonRender: 'form'
+    })
+  }
+
+  likeListOnChange(e){
+    e.preventDefault();
+    this.setState({
+      likelistinput: e.target.value
     })
   }
 
@@ -32,13 +69,149 @@ class App extends React.Component {
       listbuttonRender: 'default'
     })
   }
-  submitCreateListbutton(){
+
+  submitCreateListbutton(e){
+    console.log('submit button clicked!');
     //perform post options on user!
-    this.setState({
-      listbuttonRender: 'default'
+    let obj = {
+      "_id": this.state.user._id,
+      "likeplace": this.state.clickedplace._id,
+      "list": this.state.likelistinput,
+      "like": true
+    }
+    console.log(obj)
+
+    axios.post(this.serverUserPost,obj)
+    .then((res)=>{
+      console.log(res.status);
+      this.setState({
+        likelistinput: '',
+        listbuttonRender: 'default'
+      })
     })
+    .catch((e)=>{
+      console.log(e);
+    })
+    .then( ()=> axios.get('http://localhost:3003/api/users'))
+    .then((res) => {
+      const currentUser = res.data[this.userIndex];
+      console.log(currentUser);
+      this.setState({
+        user: currentUser
+      })
+    })
+    .catch((e)=>{
+      console.log(e);
+    })
+    e.preventDefault();
   }
+
+  listLikeToggle(e, singleList){
+    console.log("list is clicked");
+    console.log(singleList)
+    if(singleList._id !== ''){
+      //patch request
+      let placeId = singleList._id;
+      const obj = {
+            like: singleList.like === true ? false: true
+      }
+      console.log(`http://localhost:3003/api/users/${placeId}`)
+      axios.patch(`http://localhost:3003/api/users/${placeId}`, obj)
+      .then((res)=>{
+        console.log(res.status);
+      })    .catch((e)=>{
+        console.log(e);
+      })
+      .then( ()=> axios.get('http://localhost:3003/api/users'))
+      .then((res) => {
+        const currentUser = res.data[this.userIndex];
+        console.log(currentUser);
+        this.setState({
+          user: currentUser
+        })
+      })
+      .catch((e)=>{
+        console.log(e);
+      })
+      e.preventDefault();
+    }else if(singleList._id === ''){
+      let obj = {
+        "_id": this.state.user._id,
+        "likeplace": this.state.clickedplace._id,
+        "list": singleList.list,
+        "like": true
+      }
+      axios.post(`http://localhost:3003/api/users`, obj)
+      .then((res)=>{
+        console.log(res.status);
+      })    .catch((e)=>{
+        console.log(e);
+      })
+      .then( ()=> axios.get('http://localhost:3003/api/users'))
+      .then((res) => {
+        const currentUser = res.data[this.userIndex];
+        console.log(currentUser);
+        this.setState({
+          user: currentUser
+        })
+      })
+      .catch((e)=>{
+        console.log(e);
+      })
+      e.preventDefault();
+    }
+  }
+
+
+
+
   //end of List form button interrupt
+
+  //topbar onclick
+  leftArrowClicked(){
+    console.log("leftArrow clicked");
+    const totalPlaceCopy = [... this.state.totalplaces];
+    let fourplaces = [];
+    let updatePage
+    if(this.state.page === 2){
+      fourplaces = totalPlaceCopy.slice(0,4)
+      updatePage = 1;
+      console.log(fourplaces);
+      this.setState({
+        page: updatePage,
+        places: fourplaces
+      })
+    }else if(this.state.page === 3){
+      fourplaces = totalPlaceCopy.slice(4,8)
+      updatePage = 2;
+      this.setState({
+        page: updatePage,
+        places: fourplaces
+      })
+    }
+  }
+  rightArrowClicked(){
+    console.log("rightArrow clicked");
+    const totalPlaceCopy = [... this.state.totalplaces];
+    let fourplaces = [];
+    let updatePage
+    if(this.state.page === 1){
+      fourplaces = totalPlaceCopy.slice(4,8);
+      console.log(fourplaces);
+      updatePage = 2;
+      this.setState({
+        page: updatePage,
+        places: fourplaces
+      })
+    }else if(this.state.page === 2){
+      fourplaces = totalPlaceCopy.slice(8)
+      updatePage = 3;
+      this.setState({
+        page: updatePage,
+        places: fourplaces
+      })
+    }
+  }
 
 
 
@@ -46,15 +219,18 @@ class App extends React.Component {
     axios.get('http://localhost:3003/api/places')
     .then((res)=>{
       //suppose to do some filtring here?
-      const fourplaces = res.data.slice(0,12);
+      const totalplaces = [...res.data].slice(0,12);
+      const fourplaces = [...totalplaces].slice(0,4);
       this.setState({
-        places: fourplaces
+        places: fourplaces,
+        totalplaces: totalplaces
       })
     })
     .then( ()=> axios.get('http://localhost:3003/api/users'))
     .then((res) => {
       //taking 1st sample as example
-      const currentUser = res.data[9];
+      const currentUser = res.data[this.userIndex];
+      console.log(currentUser);
       this.setState({
         isLoaded:true,
         user: currentUser
@@ -68,17 +244,33 @@ class App extends React.Component {
       return <div>Error: {error.message}</div>
     }else if(!isLoaded){
       return <div>loading...</div>;
-    }else {
+    }else if(this.state.saveToAListRender === 'true'){
       return (
-        <div className="wrapper">
-          <TopBar page={this.state.page} totalpage={3}/>
-          <Carousel places={this.state.places} />
+        <div className={styles.wrapper}>
           <LikeForm
             user={this.state.user}
             listbuttonRender={this.state.listbuttonRender}
+            clickedplace = {this.state.clickedplace}
             createNewList={this.createNewList}
             cancelCreateListButton = {this.cancelCreateListButton}
-            submitCreateListbutton = {this.submitCreateListbutton}/>
+            submitCreateListbutton = {this.submitCreateListbutton}
+            exitLikeFormClicked = {this.exitLikeFormClicked}
+            likeListOnChange = {this.likeListOnChange}
+            listLikeToggle = {this.listLikeToggle}
+            />
+        </div>
+        )
+    }else {
+      return (
+        <div className={styles.wrapper}>
+          <TopBar
+            page={this.state.page}
+            totalpage={3}
+            leftArrowClicked={this.leftArrowClicked}
+            rightArrowClicked={this.rightArrowClicked}/>
+          <Carousel
+            places={this.state.places}
+            heartClicked = {this.heartClicked}/>
         </div>
       )
     }

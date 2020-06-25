@@ -29,6 +29,8 @@ module.exports = {
   },
   update: (req,res) => {
     console.log('in server PATCH user loop');
+    console.log(req.params.placeId)
+    console.log(req.body.like)
     User.update(
       { "likeplace._id": req.params.placeId},
       {"$set": { "likeplace.$.like": req.body.like}}
