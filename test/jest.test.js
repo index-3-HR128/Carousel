@@ -36,10 +36,3 @@ describe('Testing Get functions in user', () => {
     })
   })
 })
-
-describe('<App /> rendering', () => {
-    it('check if <App/> is a <div></div>', () => {
-        let wrapper = shallow(<App />);
-        expect(wrapper.type()).toEqual('div');
-    });
-});
