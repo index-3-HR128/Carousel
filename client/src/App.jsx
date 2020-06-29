@@ -3,6 +3,7 @@ import axios from 'axios';
 import Carousel from './Carousel.jsx';
 import TopBar from './TopBar.jsx';
 import LikeForm from './LikeForm.jsx';
+import Modal from 'react-modal';
 import styles from './styles.css';
 
 class App extends React.Component {
@@ -18,8 +19,21 @@ class App extends React.Component {
       listbuttonRender: 'default',
       saveToAListRender: 'false',
       likelistinput: '',
-      clickedplace: {}
+      clickedplace: {},
+      modelOpen: false
     };
+    this.customStyles = {
+      content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-100%',
+        transform             : 'translate(-50%, -50%)'
+      }
+    };
+    Modal.setAppElement(document.getElementById('app'))
+
     this.createNewList = this.createNewList.bind(this);
     this.cancelCreateListButton = this.cancelCreateListButton.bind(this);
     this.submitCreateListbutton = this.submitCreateListbutton.bind(this);
@@ -36,10 +50,10 @@ class App extends React.Component {
 
   //heart clicked
   heartClicked(place){
-    console.log(place);
     this.setState({
       saveToAListRender: 'true',
       clickedplace: place,
+      modelOpen: true
     })
   }
 
@@ -47,7 +61,8 @@ class App extends React.Component {
   exitLikeFormClicked(){
     this.setState({
       saveToAListRender: 'false',
-      clickedplace: {}
+      clickedplace: {},
+      modelOpen: false
     })
   }
 
@@ -79,7 +94,6 @@ class App extends React.Component {
       "list": this.state.likelistinput,
       "like": true
     }
-    console.log(obj)
 
     axios.post(this.serverUserPost,obj)
     .then((res)=>{
@@ -95,7 +109,6 @@ class App extends React.Component {
     .then( ()=> axios.get('http://localhost:3003/api/users'))
     .then((res) => {
       const currentUser = res.data[this.userIndex];
-      console.log(currentUser);
       this.setState({
         user: currentUser
       })
@@ -108,14 +121,12 @@ class App extends React.Component {
 
   listLikeToggle(e, singleList){
     console.log("list is clicked");
-    console.log(singleList)
     if(singleList._id !== ''){
       //patch request
       let placeId = singleList._id;
       const obj = {
             like: singleList.like === true ? false: true
       }
-      console.log(`http://localhost:3003/api/users/${placeId}`)
       axios.patch(`http://localhost:3003/api/users/${placeId}`, obj)
       .then((res)=>{
         console.log(res.status);
@@ -188,6 +199,13 @@ class App extends React.Component {
         page: updatePage,
         places: fourplaces
       })
+    }else if(this.state.page === 1){
+      fourplaces = totalPlaceCopy.slice(8)
+      updatePage = 3;
+      this.setState({
+        page: updatePage,
+        places: fourplaces
+      })
     }
   }
   rightArrowClicked(){
@@ -210,9 +228,15 @@ class App extends React.Component {
         page: updatePage,
         places: fourplaces
       })
+    }else if(this.state.page === 3){
+      fourplaces = totalPlaceCopy.slice(0,4)
+      updatePage = 1;
+      this.setState({
+        page: updatePage,
+        places: fourplaces
+      })
     }
   }
-
 
 
   componentDidMount(){
@@ -222,7 +246,7 @@ class App extends React.Component {
       const totalplaces = [...res.data].slice(0,12);
       const fourplaces = [...totalplaces].slice(0,4);
       this.setState({
-        places: fourplaces,
+        places: totalplaces,
         totalplaces: totalplaces
       })
     })
@@ -230,7 +254,6 @@ class App extends React.Component {
     .then((res) => {
       //taking 1st sample as example
       const currentUser = res.data[this.userIndex];
-      console.log(currentUser);
       this.setState({
         isLoaded:true,
         user: currentUser
@@ -244,25 +267,25 @@ class App extends React.Component {
       return <div>Error: {error.message}</div>
     }else if(!isLoaded){
       return <div>loading...</div>;
-    }else if(this.state.saveToAListRender === 'true'){
-      return (
-        <div className={styles.wrapper}>
-          <LikeForm
-            user={this.state.user}
-            listbuttonRender={this.state.listbuttonRender}
-            clickedplace = {this.state.clickedplace}
-            createNewList={this.createNewList}
-            cancelCreateListButton = {this.cancelCreateListButton}
-            submitCreateListbutton = {this.submitCreateListbutton}
-            exitLikeFormClicked = {this.exitLikeFormClicked}
-            likeListOnChange = {this.likeListOnChange}
-            listLikeToggle = {this.listLikeToggle}
-            />
-        </div>
-        )
     }else {
       return (
         <div className={styles.wrapper}>
+          <Modal
+              isOpen={this.state.modelOpen}
+              style={this.customStyles}
+              contentLabel="Example Modal">
+            <LikeForm
+              user={this.state.user}
+              listbuttonRender={this.state.listbuttonRender}
+              clickedplace = {this.state.clickedplace}
+              createNewList={this.createNewList}
+              cancelCreateListButton = {this.cancelCreateListButton}
+              submitCreateListbutton = {this.submitCreateListbutton}
+              exitLikeFormClicked = {this.exitLikeFormClicked}
+              likeListOnChange = {this.likeListOnChange}
+              listLikeToggle = {this.listLikeToggle}
+              />
+          </Modal>
           <TopBar
             page={this.state.page}
             totalpage={3}
@@ -270,7 +293,8 @@ class App extends React.Component {
             rightArrowClicked={this.rightArrowClicked}/>
           <Carousel
             places={this.state.places}
-            heartClicked = {this.heartClicked}/>
+            heartClicked = {this.heartClicked}
+            likeplace = {this.state.user.likeplace} />
         </div>
       )
     }
