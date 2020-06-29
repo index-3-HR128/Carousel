@@ -17,7 +17,7 @@ const SingleList = ({singleList, listLikeToggle}) => {
 
 
   return(
-    <div>
+    <div className={styles.containerlikelist}>
       <div>{singleList.list}</div>
       <div>
         <div onClick={(e)=>listLikeToggle(e,singleList)}>{likeRender()}</div>

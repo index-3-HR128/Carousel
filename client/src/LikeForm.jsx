@@ -44,6 +44,9 @@ const LikeForm = ({
     //input into listOBJ.
     listOBJ.push(temp);
   }
+  listOBJ.sort((a,b) => {
+    return a.list.localeCompare(b.list) ;
+  })
   console.log(listOBJ);
 
 
