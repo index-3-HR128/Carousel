@@ -5,7 +5,7 @@ const app = express()
 const port = 3003
 
 //setup Express Static files
-app.use(express.static(path.join(__dirname,'..','client','dist')))
+app.use('/carousel',express.static(path.join(__dirname,'..','client','dist')))
 
 //init controller
 const PlaceController = require('./Controller/place.js')
@@ -22,6 +22,12 @@ app.use(morgan('dev'));
 //init cors
 var cors = require('cors')
 app.use(cors());
+
+//setup proxy
+app.set('trust proxy', function(ip){
+  if(ip ==='localhost:3000') return true;
+  else return false;
+})
 
 
 //Places API Calls:
