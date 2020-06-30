@@ -1,21 +1,27 @@
 import React from 'react';
+import styles from './styles.css';
 
-const ListForm = ({listButtonRender,createNewList, cancelCreateListButton, submitCreateListbutton, likeListOnChange}) =>{
+
+const ListForm = ({listButtonRender,createNewList, cancelCreateListButton, submitCreateListbutton, likeListOnChange, enablesubmitbutton}) =>{
   if(listButtonRender === 'form'){
     return(
-      <div>
+      <div className={styles.likelistformdivfirst}>
         <form onSubmit={(e)=>submitCreateListbutton(e)}>
           <label>
-            Name
-            <div>
+            <div className={styles.likelistformName}>Name</div>
+            <div className={styles.likelistforminputdiv}>
             <input
+              className={styles.likelistforminput}
               name="ListName"
               placeholder="Ex. Summer Vacation"
-              onChange = {(e)=>likeListOnChange(e)}/>
+              onChange = {(e)=>likeListOnChange(e)}
+              required/>
             </div>
-            <div>
-              <input type="button" name="cancel" value="Cancel" onClick={()=>cancelCreateListButton()}></input>
-              <input type="submit" name="submit" value="Create" ></input>
+            <div className={styles.likelistformbuttondiv}>
+              <div className={styles.likelistformbuttoncanceldiv}>
+                <input className={styles.likelistformbuttoncancel} type="button" name="cancel" value="Cancel" onClick={()=>cancelCreateListButton()}></input>
+              </div>
+              <input className={styles.likelistformbuttonsubmit} disable={!enablesubmitbutton}type="submit" name="submit" value="Create" ></input>
             </div>
           </label>
         </form>
@@ -23,8 +29,8 @@ const ListForm = ({listButtonRender,createNewList, cancelCreateListButton, submi
     )
   }else{
     return(
-      <div>
-        <div onClick={()=>createNewList()}>
+      <div className={styles.CreateNewListDiv}>
+        <div className={styles.CreateNewList} onClick={()=>createNewList()}>
           Create a new list
         </div>
       </div>

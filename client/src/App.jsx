@@ -20,19 +20,9 @@ class App extends React.Component {
       saveToAListRender: 'false',
       likelistinput: '',
       clickedplace: {},
+      enablesubmitbutton: false,
       modelOpen: false
     };
-    this.customStyles = {
-      content : {
-        top                   : '50%',
-        left                  : '50%',
-        right                 : 'auto',
-        bottom                : 'auto',
-        marginRight           : '-100%',
-        transform             : 'translate(-50%, -50%)'
-      }
-    };
-    Modal.setAppElement(document.getElementById('app'))
 
     this.createNewList = this.createNewList.bind(this);
     this.cancelCreateListButton = this.cancelCreateListButton.bind(this);
@@ -43,6 +33,7 @@ class App extends React.Component {
     this.exitLikeFormClicked = this.exitLikeFormClicked.bind(this);
     this.likeListOnChange = this.likeListOnChange.bind(this);
     this.listLikeToggle = this.listLikeToggle.bind(this);
+    this.outsideModalClick = this.outsideModalClick.bind(this);
 
     this.serverUserPost = "http://localhost:3003/api/users";
     this.userIndex = 0;
@@ -55,6 +46,10 @@ class App extends React.Component {
       clickedplace: place,
       modelOpen: true
     })
+  }
+
+  outsideModalClick(){
+    console.log("outsideModalClicked!")
   }
 
   //List form button interrupt
@@ -75,7 +70,8 @@ class App extends React.Component {
   likeListOnChange(e){
     e.preventDefault();
     this.setState({
-      likelistinput: e.target.value
+      likelistinput: e.target.value,
+      enablesubmitbutton: true
     })
   }
 
@@ -136,7 +132,6 @@ class App extends React.Component {
       .then( ()=> axios.get('http://localhost:3003/api/users'))
       .then((res) => {
         const currentUser = res.data[this.userIndex];
-        console.log(currentUser);
         this.setState({
           user: currentUser
         })
@@ -161,7 +156,6 @@ class App extends React.Component {
       .then( ()=> axios.get('http://localhost:3003/api/users'))
       .then((res) => {
         const currentUser = res.data[this.userIndex];
-        console.log(currentUser);
         this.setState({
           user: currentUser
         })
@@ -187,7 +181,6 @@ class App extends React.Component {
     if(this.state.page === 2){
       fourplaces = totalPlaceCopy.slice(0,4)
       updatePage = 1;
-      console.log(fourplaces);
       this.setState({
         page: updatePage,
         places: fourplaces
@@ -215,7 +208,6 @@ class App extends React.Component {
     let updatePage
     if(this.state.page === 1){
       fourplaces = totalPlaceCopy.slice(4,8);
-      console.log(fourplaces);
       updatePage = 2;
       this.setState({
         page: updatePage,
@@ -269,33 +261,34 @@ class App extends React.Component {
       return <div>loading...</div>;
     }else {
       return (
-        <div className={styles.wrapper}>
-          <Modal
-              isOpen={this.state.modelOpen}
-              style={this.customStyles}
-              contentLabel="Example Modal">
+        <div>
             <LikeForm
-              user={this.state.user}
-              listbuttonRender={this.state.listbuttonRender}
-              clickedplace = {this.state.clickedplace}
-              createNewList={this.createNewList}
-              cancelCreateListButton = {this.cancelCreateListButton}
-              submitCreateListbutton = {this.submitCreateListbutton}
-              exitLikeFormClicked = {this.exitLikeFormClicked}
-              likeListOnChange = {this.likeListOnChange}
-              listLikeToggle = {this.listLikeToggle}
-              />
-          </Modal>
-          <TopBar
-            page={this.state.page}
-            totalpage={3}
-            leftArrowClicked={this.leftArrowClicked}
-            rightArrowClicked={this.rightArrowClicked}/>
-          <Carousel
-            places={this.state.places}
-            heartClicked = {this.heartClicked}
-            likeplace = {this.state.user.likeplace} />
+            user={this.state.user}
+            listbuttonRender={this.state.listbuttonRender}
+            clickedplace = {this.state.clickedplace}
+            enablesubmitbutton = {this.state.enablesubmitbutton}
+            modelOpen = {this.state.modelOpen}
+            createNewList={this.createNewList}
+            cancelCreateListButton = {this.cancelCreateListButton}
+            submitCreateListbutton = {this.submitCreateListbutton}
+            exitLikeFormClicked = {this.exitLikeFormClicked}
+            likeListOnChange = {this.likeListOnChange}
+            listLikeToggle = {this.listLikeToggle}
+            outsideModalClick = {this.outsideModalClick}
+            />
+          <div className={styles.wrapper}>
+            <TopBar
+              page={this.state.page}
+              totalpage={3}
+              leftArrowClicked={this.leftArrowClicked}
+              rightArrowClicked={this.rightArrowClicked}/>
+            <Carousel
+              places={this.state.places}
+              heartClicked = {this.heartClicked}
+              likeplace = {this.state.user.likeplace} />
+          </div>
         </div>
+
       )
     }
 

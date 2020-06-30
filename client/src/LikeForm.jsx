@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState, useRef }  from 'react';
 import ListForm from './ListForm.jsx';
-import SingleList from './SingleList.jsx'
+import SingleList from './SingleList.jsx';
+import styles from './styles.css';
 
 const LikeForm = ({
   user,
@@ -11,7 +12,10 @@ const LikeForm = ({
   exitLikeFormClicked,
   likeListOnChange,
   clickedplace,
-  listLikeToggle
+  listLikeToggle,
+  enablesubmitbutton,
+  modelOpen,
+  outsideModalClick
   }) => {
   let list = [];
   let listOBJ = [];
@@ -47,64 +51,61 @@ const LikeForm = ({
   listOBJ.sort((a,b) => {
     return a.list.localeCompare(b.list) ;
   })
-  console.log(listOBJ);
+
+  const modelOpenfunction = () =>{
+    if(modelOpen  === true){
+      return styles.likeformwrapperopen;
+    }else{
+      return styles.likeformwrapperclose;
+    }
+  }
+
+  const clickingModal = ()=>{
+    console.log("modal clicked!")
+  }
+
+  const bluringModal = () =>{
+    console.log("Blur Clicked!")
+    modelOpen=false;
+  }
+
 
 
   return (
-    <div>
-      <div onClick={()=>exitLikeFormClicked()}>X</div>
-      <div>
-        <h3>Save to a list {clickedplace._id}</h3>
-      </div>
-      <div>
-        <ListForm
-          listButtonRender={listbuttonRender}
-          createNewList={createNewList}
-          cancelCreateListButton={cancelCreateListButton}
-          submitCreateListbutton={submitCreateListbutton}
-          likeListOnChange = {likeListOnChange}/>
-      </div>
-      <div>
-        {listOBJ.map((singleList, index) => (
-          <SingleList
-            key={index}
-            singleList = {singleList}
-            listLikeToggle = {listLikeToggle}/>
-        ))}
+    <div className={modelOpenfunction()} id="myModal">
+      <div className={styles.popupfirst}>
+        <div className={styles.popupsecond}>
+          <div className = {styles.popupthird}>
+            <div className={styles.popupx} onClick={()=>exitLikeFormClicked()}>X</div>
+            <div className={styles.popupsavetoalist}>
+              <h1 className={styles.popupsavetoalisth1}>Save to a list</h1>
+            </div>
+            <div className={styles.scrollerforlikelist}>
+              <div>
+                <ListForm
+                  listButtonRender={listbuttonRender}
+                  createNewList={createNewList}
+                  cancelCreateListButton={cancelCreateListButton}
+                  submitCreateListbutton={submitCreateListbutton}
+                  likeListOnChange = {likeListOnChange}
+                  enablesubmitbutton = {enablesubmitbutton}/>
+              </div>
+              <div>
+                {listOBJ.map((singleList, index) => (
+                  <SingleList
+                    key={index}
+                    singleList = {singleList}
+                    listLikeToggle = {listLikeToggle}/>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
   )
 }
 
 
 export default LikeForm;
-
-  //   if(clickedplace._id === user.likeplace[i].name && list.indexOf(user.likeplace[i].list) < 0 ){
-  //     let temp ={
-  //       id: user.likeplace[i]._id,
-  //       name: user.likeplace[i].name,
-  //       list: user.likeplace[i].list,
-  //       like: user.likeplace[i].like
-  //     }
-  //     listOBJ.push(temp);
-  //     list.push(user.likeplace[i].list)
-  //   }else if(clickedplace._id === user.likeplace[i].name && list.indexOf(user.likeplace[i].list) >=0){
-  //     for(let i in listOBJ){
-  //       if(listOBJ[i].list === user.likeplace[i].list){
-  //         listOBJ[i].id = user.likeplace[i]._id
-  //         listOBJ[i].like = user.likeplace[i].like
-  //       }
-  //     }
-  //   }
-  //   else{
-  //     if(list.indexOf(user.likeplace[i].list) < 0 ){
-  //       let temp={
-  //         id: '',
-  //         list: user.likeplace[i].list,
-  //         like: false
-  //       }
-  //       listOBJ.push(temp);
-  //       list.push(user.likeplace[i].list)
-  //     }
-  //   }
-  // }
