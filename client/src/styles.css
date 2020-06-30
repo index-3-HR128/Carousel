@@ -134,9 +134,6 @@ div.container:hover .heartbutton{
 }
 
 
-button.button{
-}
-
 
 
 /* container for each list (place) item */
@@ -170,13 +167,13 @@ div.container{
   width: 32px;
   height: 32px;
   max-height: 40px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.75);
   border: none;
   border-radius: 45%;
   border-color: rgba(0, 0, 0, 0.08);
   opacity: 0;
   box-shadow: rgba(0, 0, 0, 0.10) 0px 2px 4px;
-  transition: box-shadow 0.2s ease 0s, -ms-transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s, transform 0.25s ease 0s;
+  transition: background-color 0.25s ease 0s, -ms-transform 0.25s ease 0s, -webkit-transform 0.25s ease 0s, transform 0.25s ease 0s;
   outline:0;
 }
 
@@ -187,6 +184,7 @@ div.container{
   height: 16px;
   width: 16px;
 }
+
 .heartYesLike {
   fill: rgb(255, 56, 92);
   stroke-width: 2;
@@ -195,11 +193,14 @@ div.container{
 }
 
 .heartbutton:hover{
-  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.30);
+  background-color:rgba(255, 255, 255, 1);
+  transform: scale(1.1);
   outline:0;
 }
+
 .heartbutton:active{
-  box-shadow: 0px 0px 0px 4px transparent;
+  background-color: rgba(255, 255, 255, 0.75);
+  transform: scale(1.1);
   outline:0;
 }
 
@@ -232,8 +233,8 @@ div.container{
   border-image: initial;
   padding: 1px 5px 1px 5px;
   margin-right: 6px;
-
 }
+
 .placetype{
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
@@ -296,9 +297,209 @@ div.container{
   margin-top: 4px;
 }
 
+.likeformwrapperopen{
+  display: block;
+}
+.likeformwrapperclose{
+  display: none;
+}
+
+.popupfirst{
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.popupsecond{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 64px;
+  margin-bottom: 64px;
+  max-width: 568px;
+  overflow: visible;
+}
+
+.popupthird{
+  background-color: rgb(255,255,255);
+  padding: 32px;
+  z-index: 4000;
+}
+
+.popupx{
+  margin-bottom: 24px;
+}
+
+.popupsavetoalist{
+  padding-bottom: 24px
+}
+
+.popupsavetoalisth1{
+  display: block;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: rgb(72,72,72);
+  font-size: 24;
+  margin: 0px;
+}
+
+.scrollerforlikelist{
+  overflow-y: scroll;
+  height: 50vh;
+}
+
+.CreateNewListDiv{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  color: rgb(0, 132, 137);
+  padding-top: 16px;
+  padding-bottom: 16px;
+  display: inline-block;
+  cursor: pointer;
+}
+.CreateNewList:hover{
+  text-decoration: underline;
+  font-size: 16;
+}
+
+.inbetweenlistdiv{
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.inbetweenlist{
+  border: 1px solid rgba(235,235,235,0.7);
+}
+
 .containerlikelist{
   display:flex;
   justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color:rgb(72,72,72);
+  padding-top:16px;
+  padding-bottom:16px;
 }
 
+.heartInList{
+  transform:translateY(0.5px);
+}
 
+.heartNoLikeinlist {
+  fill: none;
+  stroke: rgb(34, 34, 34);
+  stroke-width: 2;
+  height: 24px;
+  width: 24px;
+}
+
+.heartYesLikeinlist {
+  fill: rgb(255, 56, 92);
+  stroke-width: 2;
+  height: 24px;
+  width: 24px;
+}
+
+.likelistformdivfirst{
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.likelistformName{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: rgba(72,72,72, 0.9);
+  margin-bottom: 8px;
+}
+
+.likelistforminputdiv{
+  width: 100%
+}
+
+.likelistforminput{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  padding: 11px;
+  width: 100%;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid rgb(235,235,235);
+  outline:none;
+  color: #484848;
+  border-radius:5px;
+
+}
+.likelistforminput:focus{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  color:rgba(72,72,72, 0.9);
+  border: 1px solid rgb(0, 132, 137);
+  border-radius:5px;
+}
+
+.likelistformbuttondiv{
+  margin-top:16px;
+  text-align: right;
+}
+
+.likelistformbuttoncanceldiv{
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.likelistformbuttoncancel{
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  width: auto;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(0, 132, 137);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 800;
+  padding-left: 22px;
+  padding-right: 22px;
+  min-width: 71.1935px;
+  margin: 0px;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(0, 132, 137);
+  background: transparent;
+  outline:0;
+}
+
+.likelistformbuttonsubmit{
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  width: auto;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(255,255,255);
+  background: rgb(0, 132, 137);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 800;
+  padding-left: 22px;
+  padding-right: 22px;
+  min-width: 71.1935px;
+  margin: 0px;
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(0, 132, 137);
+  outline:0;
+}

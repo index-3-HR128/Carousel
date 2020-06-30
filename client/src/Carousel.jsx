@@ -8,14 +8,13 @@ const Carousel = ({places, heartClicked, likeplace}) => (
   <div className={styles.row}>
       <div className={styles.row__inner}>
         <ul className={styles.listul}>
-          {places.map( (place) => (
-            // <ScrollElement place={place}>
+          {places.map( (place,index) => (
               <li className={styles.listli}>
-              <Place
-                key={place._id}
-                place={place}
-                heartClicked = {heartClicked}
-                likeplace = {likeplace}/>
+                <Place
+                  key={index}
+                  place={place}
+                  heartClicked = {heartClicked}
+                  likeplace = {likeplace}/>
               </li>
           ))}
         </ul>
