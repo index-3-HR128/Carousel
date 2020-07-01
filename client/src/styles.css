@@ -108,6 +108,8 @@ div.row__inner{
   height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;
   padding-left: 0px;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -115,7 +117,10 @@ div.row__inner{
   scroll-snap-type: x mandatory;
   list-style: none;
   scroll-behavior: smooth;
-
+}
+.listul::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
 .listli{
