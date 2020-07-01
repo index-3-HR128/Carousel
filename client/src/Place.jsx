@@ -53,6 +53,7 @@ const Place = ({place, heartClicked, likeplace}) => {
     <div className={styles.container}>
       <div className={styles.flexbox_container}>
         <img className={styles.placeimg} src={place.picture} width="265" height="177" />
+        <a className={styles.imgsrc} href={place.src} />
         <button className={styles.heartbutton} onClick={()=>heartClicked(place)}>
           <div className={styles.heartTextFix}>
             <svg className={checkLikePlace()} viewBox="0 0 32 32">

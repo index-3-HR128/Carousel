@@ -34,10 +34,13 @@ class App extends React.Component {
     this.likeListOnChange = this.likeListOnChange.bind(this);
     this.listLikeToggle = this.listLikeToggle.bind(this);
     this.outsideModalClick = this.outsideModalClick.bind(this);
+    this.enableyscroller = this.enableyscroller.bind(this);
 
     this.serverUserPost = "http://localhost:3003/api/users";
     this.userIndex = 0;
   }
+
+
 
   //heart clicked
   heartClicked(place){
@@ -230,6 +233,15 @@ class App extends React.Component {
     }
   }
 
+  enableyscroller(){
+    if(modelOpen === true){
+      return styles.disableyscroller;
+    }else{
+      return styles.enableyscroller;
+    }
+  }
+
+
 
   componentDidMount(){
     axios.get('http://localhost:3003/api/places')
@@ -261,7 +273,7 @@ class App extends React.Component {
       return <div>loading...</div>;
     }else {
       return (
-        <div>
+        <div className={styles.carouselwrap}>
             <LikeForm
             user={this.state.user}
             listbuttonRender={this.state.listbuttonRender}

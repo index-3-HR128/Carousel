@@ -54,8 +54,10 @@ const LikeForm = ({
 
   const modelOpenfunction = () =>{
     if(modelOpen  === true){
+      document.body.style.overflow = "hidden";
       return styles.likeformwrapperopen;
     }else{
+      document.body.style.overflow = "scroll";
       return styles.likeformwrapperclose;
     }
   }
@@ -68,6 +70,8 @@ const LikeForm = ({
     console.log("Blur Clicked!")
     modelOpen=false;
   }
+
+  if(open)
 
 
 

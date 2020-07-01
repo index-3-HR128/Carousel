@@ -4,8 +4,7 @@
 
 a { text-decoration: none; }
 
-
-body {
+.carouselwrap{
   background-color: #F7F7F7;
   font-family: 'Nunito Sans', sans-serif;
 }
@@ -156,6 +155,15 @@ div.container{
   max-height:100%;
 }
 
+.imgsrc{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%
+}
+
 .heartTextFix{
   transform:translateY(0.5px);
 }
@@ -304,6 +312,13 @@ div.container{
   display: none;
 }
 
+.enableyscroller{
+  display: scroll;
+}
+.disableyscroller{
+  overflow-y: hidden;
+}
+
 .popupfirst{
   position: fixed;
   z-index: 2000;
@@ -333,6 +348,8 @@ div.container{
 
 .popupx{
   margin-bottom: 24px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
 }
 
 .popupsavetoalist{
