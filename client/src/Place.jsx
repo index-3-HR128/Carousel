@@ -50,29 +50,31 @@ const Place = ({place, heartClicked, likeplace}) => {
   }
   const id = place._id;
   return (
-    <div className={styles.container}>
-      <div className={styles.flexbox_container}>
-        <img className={styles.placeimg} src={place.picture} width="265" height="177" />
-        <a className={styles.imgsrc} href={place.src} />
-        <button className={styles.heartbutton} onClick={()=>heartClicked(place)}>
-          <div className={styles.heartTextFix}>
-            <svg className={checkLikePlace()} viewBox="0 0 32 32">
-              <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path>
-            </svg>
-          </div>
-        </button>
+    <li className={styles.listli}>
+      <div className={styles.container}>
+        <div className={styles.flexbox_container}>
+          <img className={styles.placeimg} src={place.picture} width="265" height="177" />
+          <a className={styles.imgsrc} href={place.src} />
+          <button className={styles.heartbutton} onClick={()=>heartClicked(place)}>
+            <div className={styles.heartTextFix}>
+              <svg className={checkLikePlace()} viewBox="0 0 32 32">
+                <path d="m16 28c7-4.733 14-10 14-17 0-1.792-.683-3.583-2.05-4.95-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05l-2.051 2.051-2.05-2.051c-1.367-1.366-3.158-2.05-4.95-2.05-1.791 0-3.583.684-4.949 2.05-1.367 1.367-2.051 3.158-2.051 4.95 0 7 7 12.267 14 17z"></path>
+              </svg>
+            </div>
+          </button>
 
+        </div>
+        <div className={styles.firstlinetext}>
+          {superhostRender()} {placetype()} {ratingRender()}
+        </div>
+        <div className={styles.placetext}>
+          {place.title}
+        </div>
+        <div className={styles.placepricediv}>
+          <span className={styles.placeprice}>${place.price}</span> / night
+        </div>
       </div>
-      <div className={styles.firstlinetext}>
-        {superhostRender()} {placetype()} {ratingRender()}
-      </div>
-      <div className={styles.placetext}>
-        {place.title}
-      </div>
-      <div className={styles.placepricediv}>
-        <span className={styles.placeprice}>${place.price}</span> / night
-      </div>
-    </div>
+    </li>
   )
 }
 

@@ -62,24 +62,13 @@ const LikeForm = ({
     }
   }
 
-  const clickingModal = ()=>{
-    console.log("modal clicked!")
-  }
-
-  const bluringModal = () =>{
-    console.log("Blur Clicked!")
-    modelOpen=false;
-  }
-
-  if(open)
-
 
 
   return (
     <div className={modelOpenfunction()} id="myModal">
-      <div className={styles.popupfirst}>
+      <div className={styles.popupfirst} onClick={(e)=>outsideModalClick(e)}>
         <div className={styles.popupsecond}>
-          <div className = {styles.popupthird}>
+          <div className = {styles.popupthird} id="modal" >
             <div className={styles.popupx} onClick={()=>exitLikeFormClicked()}>X</div>
             <div className={styles.popupsavetoalist}>
               <h1 className={styles.popupsavetoalisth1}>Save to a list</h1>

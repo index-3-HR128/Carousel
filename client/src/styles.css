@@ -114,6 +114,8 @@ div.row__inner{
   min-width: 100%;
   scroll-snap-type: x mandatory;
   list-style: none;
+  scroll-behavior: smooth;
+
 }
 
 .listli{

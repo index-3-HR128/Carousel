@@ -7,15 +7,13 @@ import styles from './styles.css';
 const Carousel = ({places, heartClicked, likeplace}) => (
   <div className={styles.row}>
       <div className={styles.row__inner}>
-        <ul className={styles.listul}>
+        <ul className={styles.listul} id="scroller">
           {places.map( (place,index) => (
-              <li className={styles.listli}>
                 <Place
                   key={index}
                   place={place}
                   heartClicked = {heartClicked}
                   likeplace = {likeplace}/>
-              </li>
           ))}
         </ul>
       </div>

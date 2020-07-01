@@ -34,7 +34,6 @@ class App extends React.Component {
     this.likeListOnChange = this.likeListOnChange.bind(this);
     this.listLikeToggle = this.listLikeToggle.bind(this);
     this.outsideModalClick = this.outsideModalClick.bind(this);
-    this.enableyscroller = this.enableyscroller.bind(this);
 
     this.serverUserPost = "http://localhost:3003/api/users";
     this.userIndex = 0;
@@ -51,8 +50,12 @@ class App extends React.Component {
     })
   }
 
-  outsideModalClick(){
-    console.log("outsideModalClicked!")
+  outsideModalClick(e){
+    let modalId = document.getElementById('modal');
+    var isClickInside = modalId.contains(e.target);
+    if (!isClickInside) {
+      this.exitLikeFormClicked();
+    }
   }
 
   //List form button interrupt
@@ -85,8 +88,6 @@ class App extends React.Component {
   }
 
   submitCreateListbutton(e){
-    console.log('submit button clicked!');
-    //perform post options on user!
     let obj = {
       "_id": this.state.user._id,
       "likeplace": this.state.clickedplace._id,
@@ -96,7 +97,6 @@ class App extends React.Component {
 
     axios.post(this.serverUserPost,obj)
     .then((res)=>{
-      console.log(res.status);
       this.setState({
         likelistinput: '',
         listbuttonRender: 'default'
@@ -119,7 +119,6 @@ class App extends React.Component {
   }
 
   listLikeToggle(e, singleList){
-    console.log("list is clicked");
     if(singleList._id !== ''){
       //patch request
       let placeId = singleList._id;
@@ -177,70 +176,44 @@ class App extends React.Component {
 
   //topbar onclick
   leftArrowClicked(){
-    console.log("leftArrow clicked");
-    const totalPlaceCopy = [... this.state.totalplaces];
-    let fourplaces = [];
-    let updatePage
+    const scroller = document.getElementById('scroller');
     if(this.state.page === 2){
-      fourplaces = totalPlaceCopy.slice(0,4)
-      updatePage = 1;
+      scroller.scrollLeft = 0;
       this.setState({
-        page: updatePage,
-        places: fourplaces
+        page: 1
       })
     }else if(this.state.page === 3){
-      fourplaces = totalPlaceCopy.slice(4,8)
-      updatePage = 2;
+      scroller.scrollLeft = 1120;
       this.setState({
-        page: updatePage,
-        places: fourplaces
+        page: 2
       })
     }else if(this.state.page === 1){
-      fourplaces = totalPlaceCopy.slice(8)
-      updatePage = 3;
+      scroller.scrollLeft = 2240;
       this.setState({
-        page: updatePage,
-        places: fourplaces
+        page: 3
       })
     }
   }
+
   rightArrowClicked(){
-    console.log("rightArrow clicked");
-    const totalPlaceCopy = [... this.state.totalplaces];
-    let fourplaces = [];
-    let updatePage
+    const scroller = document.getElementById('scroller');
     if(this.state.page === 1){
-      fourplaces = totalPlaceCopy.slice(4,8);
-      updatePage = 2;
+      scroller.scrollLeft = 1120;
       this.setState({
-        page: updatePage,
-        places: fourplaces
+        page: 2
       })
     }else if(this.state.page === 2){
-      fourplaces = totalPlaceCopy.slice(8)
-      updatePage = 3;
+      scroller.scrollLeft = 2240;
       this.setState({
-        page: updatePage,
-        places: fourplaces
+        page: 3
       })
     }else if(this.state.page === 3){
-      fourplaces = totalPlaceCopy.slice(0,4)
-      updatePage = 1;
+      scroller.scrollLeft = 0;
       this.setState({
-        page: updatePage,
-        places: fourplaces
+        page: 1
       })
     }
   }
-
-  enableyscroller(){
-    if(modelOpen === true){
-      return styles.disableyscroller;
-    }else{
-      return styles.enableyscroller;
-    }
-  }
-
 
 
   componentDidMount(){
