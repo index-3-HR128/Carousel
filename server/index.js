@@ -5,7 +5,7 @@ const app = express()
 const port = 3003
 
 //setup Express Static files
-app.use('/carousel',express.static(path.join(__dirname,'..','client','dist')))
+app.use('/',express.static(path.join(__dirname,'..','client','dist')))
 
 //init controller
 const PlaceController = require('./Controller/place.js')
@@ -23,11 +23,11 @@ app.use(morgan('dev'));
 var cors = require('cors')
 app.use(cors());
 
-//setup proxy
-app.set('trust proxy', function(ip){
-  if(ip ==='localhost:3000') return true;
-  else return false;
-})
+// //setup proxy
+// app.set('trust proxy', function(ip){
+//   if(ip ==='localhost:3000') return true;
+//   else return false;
+// })
 
 
 //Places API Calls:
@@ -40,3 +40,15 @@ app.patch('/api/users/:placeId', UserController.update)
 
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
+
+// const express = require('express')
+// const app = express()
+// const port = 3000
+
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
+
+// app.listen(port, () => {
+//   console.log(`Example app listening at http://localhost:${port}`)
+// })
