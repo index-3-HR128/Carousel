@@ -1,6 +1,36 @@
-# Carousel
+# NearbyStay
 
-The current app is the carousel function within a room reservation app.  Based on the room number given in address, it would pick up 12 listing and show in a carousel.  User can scroll 12 listings and like the place by adding to the favorites based on user defined list.
+![](https://media.giphy.com/media/vODgBalDIUxbvcBu3E/giphy.gif)
+
+### Description
+Carousel component for room reservation service
+
+### Requirement
+- npm v8
+- MongoDB v4.2
+
+### Installation
+
+1. Install npm
+```sh
+npm install
+```
+
+2. Setup MongoDB
+```sh
+npm run db:setup
+```
+
+3. Run Webpack to bundle.
+```sh
+npm run webpack
+```
+
+4. Start server
+```sh
+npm start
+```
+
 
 <img src="/carousel.png">
 
